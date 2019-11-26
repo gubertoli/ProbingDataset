@@ -1,43 +1,52 @@
 import pyshark
-import dataAnalysis
+import pandas as pd
 
+
+df = pd.DataFrame(pd.np.empty((0, 29)))     # 29 empty columns (attributes + class)
 targetAttribute = ""
-
 
 def retrieveattribute(packet):
     pkt_to_list = []
 
     # List of the attributes to be retrieved from each packet
     attributes = [
-        ["ip", "version"],
-        ["ip", "len"],
-        ["ip", "id"],
-        ["ip", "ttl"],
-        ["ip", "frag_offset"],
-        ["ip", "flags.rb"],
-        ["ip", "flags.df"],
-        ["ip", "flags.mf"],
-        ["ip", "proto"],
-        ["ip", "checksum"],
-        ["tcp", "seq"],
-        ["tcp", "ack"],
-        ["tcp", "flags.fin"],
-        ["tcp", "flags.syn"],
-        ["tcp", "flags.reset"],
-        ["tcp", "flags.push"],
-        ["tcp", "flags.ack"],
-        ["tcp", "flags.urg"],
-        ["tcp", "options.mss_val"]  # TCP SYN - SYN/ACK
+        ["ip", "version"],          # Internet Protocol (IP) Version    (!) not expected to change on current dataset
+        ["ip", "hdr_len"],          # IP header length
+        ["ip", "len"],              # Total length
+        ["ip", "dsfield"],          # Differentiated Services Field
+        ["ip", "id"],               # Identification
+        ["ip", "ttl"],              # Time to live
+        ["ip", "frag_offset"],      # Fragment offset
+        ["ip", "flags"],            # IP flags
+        ["ip", "flags.rb"],             # Reserved bit flag
+        ["ip", "flags.df"],             # Don't fragment flag
+        ["ip", "flags.mf"],             # More fragments flag
+        ["ip", "proto"],            # Protocol (e.g. tcp == 6)          (!) not expected to change on current dataset
+        ["ip", "checksum"],         # Header checksum
+        ["tcp", "len"],             # TCP segment length
+        ["tcp", "hdr_len"],         # Header length
+        ["tcp", "seq"],             # Sequence number
+        ["tcp", "ack"],             # Acknowledgment number
+        ["tcp", "srcport"],         # Source port
+        ["tcp", "dstport"],         # Destination port
+        ["tcp", "flags"],           # Flags
+        ["tcp", "flags.fin"],           # FIN flag
+        ["tcp", "flags.syn"],           # SYN flag
+        ["tcp", "flags.reset"],         # RST flag
+        ["tcp", "flags.push"],          # PUSH flag
+        ["tcp", "flags.ack"],           # ACK flag
+        ["tcp", "flags.urg"],           # URG flag
+        ["tcp", "flags.cwr"],           # Congestion Window Reduced (CWR) flags
+        ["tcp", "options.mss_val"]  # Maximum Segment Size
     ]
 
     columns = []
     for i in attributes:
-        columns.append(i[0]+"."+i[1])
+        columns.append(str(i[0])+"."+str(i[1]))
     columns.append("Class")
 
     global df
-    df = dataAnalysis.setdataframecolumns(df, columns)
-
+    df.columns = columns
 
     for i in attributes:
         # try-except used for packet attribute validation, if not available, fill with ""
@@ -45,11 +54,12 @@ def retrieveattribute(packet):
             pkt_to_list.append(getattr(getattr(packet, i[0]), i[1]))
         except:
             pkt_to_list.append("")
-        global targetAttribute
 
+    global targetAttribute
     pkt_to_list.append(targetAttribute)
-    dataAnalysis.appenddatatodataframe(df, pkt_to_list)
-    print(pkt_to_list)
+
+    df.loc[len(df)] = pkt_to_list
+    # print(pkt_to_list)
 
 
 def main():
@@ -86,9 +96,6 @@ def main():
 
     folder = "pcap"
 
-    global df
-    df = dataAnalysis.createdataframe()
-
     for i in dictpcapfile:
         global targetAttribute
         targetAttribute = i[1]
@@ -97,7 +104,6 @@ def main():
         cap.close()
 
     print(df.head())
-    print(df.tail())
     print(df['Class'].value_counts())
 
 if __name__ == "__main__":
