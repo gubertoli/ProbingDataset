@@ -59,7 +59,6 @@ def retrieveattribute(packet):
     pkt_to_list.append(targetAttribute)
 
     df.loc[len(df)] = pkt_to_list
-    # print(pkt_to_list)
 
 
 def main():
@@ -90,8 +89,8 @@ def main():
         ("192.168.181.163", "hping_xmas", "hping3.pcapng"),
         ("192.168.181.164", "hping_fin", "hping3.pcapng"),
         ("192.168.181.165", "hping_ack", "hping3.pcapng"),
-        ("192.168.181.131", "zmap_syn", "zmap_tcp.pcapng"),
-        ("192.168.181.131", "mass_syn", "masscan.pcapng")
+        ("192.168.181.131", "zmap_syn", "zmap_tcp_5k.pcapng"),
+        ("192.168.181.131", "mass_syn", "masscan_5k.pcapng")
     )
 
     folder = "pcap"
