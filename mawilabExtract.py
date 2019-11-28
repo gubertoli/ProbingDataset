@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 
 """
 
@@ -22,8 +23,40 @@ def main():
     path = "mawilab/sample.csv"
     df = pd.read_csv(path)
 
-    anomalous  = df[df[' nbDetectors'] == "anomalous" or df[' nbDetectors'] == "suspicious"]
+    anomalous = df.loc[(df[' nbDetectors'] == "anomalous") | (df[' nbDetectors'] == "suspicious")]
+    anomalous = anomalous.fillna(0) # replace NaN by 0
 
+    # ip.src
+    # tcp.srcport
+    # ip.dst
+    # tcp.dstport
+
+    filter_rule = "not ("
+    for index, row in anomalous.iterrows():
+        srcIP = row[' srcIP']
+        srcPort = row[' srcPort']
+        dstIP = row[' dstIP']
+        dstPort = row[' dstPort']
+
+        filter_rule += " ("
+        if (srcIP != 0):
+            filter_rule += " && ip.src == " + str(srcIP)
+        if (srcPort != 0):
+            filter_rule += " && tcp.srcport == " + str(int(srcPort))
+        if (dstIP != 0):
+            filter_rule += " && ip.dst == " + str(dstIP)
+        if (dstPort != 0):
+            filter_rule += " && tcp.dstport == " + str(int(dstPort))
+        filter_rule += ") || "
+
+    filter_rule += ")"
+
+    # fixing filter rule
+    filter_rule = re.sub(r"\((\s&&\s)","(",filter_rule)
+    filter_rule = filter_rule[:len(filter_rule)-4] + ")"
+
+
+    print(filter_rule)
     print(df.columns)
     print(anomalous.head())
     print(anomalous.tail())
