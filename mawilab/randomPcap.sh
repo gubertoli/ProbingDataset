@@ -7,9 +7,17 @@
 # Reference: 
 #		https://stackoverflow.com/questions/47067272/how-to-get-random-packets-from-a-pcap-file
 #
+packets_per_file = 500000
+echo "> Splitting input PCAP file in smaller files ($packets_per_file packets)"
+editcap -c $packets_per_file $1 output.pcap
 
-large_number=150000
-smaller_number=10000
+
+#
+# [!] To implement iteration over splitted files with filter to output mawilab
+#
+
+large_number=$packets_per_file
+smaller_number=10000 # number of packets to retrieve
 selected_pkt_numbers=$(shuf -i 0-"$large_number" -n "$smaller_number")
 for j in `seq 0 512 $smaller_number`; do
     endrange=$((j+512))
