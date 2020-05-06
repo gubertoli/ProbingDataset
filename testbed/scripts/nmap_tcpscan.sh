@@ -1,40 +1,40 @@
 #!/bin/bash
 
-echo "Nome do usuario: "
+echo "Username: "
  whoami
-echo "IP: 172.16.0.3" 
-echo "Inicio em: "
+echo "IP: 172.16.0.2" 
+echo "Started on: "
  date
-echo "O script está executando do diretório:"
+echo "Current folder of the script:"
  pwd  
-echo "pfSense IP 192.168.1.1"
-echo "Victim IP 192.168.1.135"
-echo "Host IP 192.168.1.136"
-echo "IDS IP 192.168.1.139"
+#echo "pfSense IP 192.168.1.1"
+echo "Victim IP 10.10.10.10"
+echo "Host IP 10.10.10.11"
+echo "IDS IP 10.10.10.12"
 
-#IP Alvo do PortScan
-IP="192.168.1.135"
+#Portscan Target IP
+IP="10.10.10.10"
 
-#Lista
-LIST="192.168.1.101-139"
+#IP List
+LIST="10.10.10.1-139"
 
-#Rede de interesse
-NET="192.168.1.0/24"
+#Target Subnet
+NET="10.10.10.0/24"
 
-#IPs Laranjas
-IPL1="192.168.1.129"
-IPL2="192.168.1.130"
-IPL3="192.168.1.131"
+#Fake IPs - for decoy (-D) and spoof (-S)
+IPL1="10.10.10.129"
+IPL2="10.10.10.130"
+IPL3="10.10.10.131"
 
-#MAC Laranja
+#Fake MAC
 MACL="00:0c:29:87:1f:01"
 
-#IP Zombie 
-IPZ="192.168.1.136"
+#IP Zombie - for Idle Scan (-sI)
+IPZ="10.10.10.11"
 
-#Informações cadastradas
-echo "IPs (laranjas): $IPL1, $IPL2, $IPL3"
-echo "Rede de interesse: $NET"
+#Script data
+echo "IPs (fakes): $IPL1, $IPL2, $IPL3"
+echo "Target Subnet: $NET"
 
 
 #----------------------------------------------------------------------------------------------#
