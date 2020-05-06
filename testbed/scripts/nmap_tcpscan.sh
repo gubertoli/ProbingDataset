@@ -33,7 +33,7 @@ IPL3="10.10.10.131"
 MACL="00:0c:29:87:1f:01"
 
 #IP Zombie - for Idle Scan (-sI)
-IPZ="10.10.10.11"
+IPZ="172.16.0.201"
 
 #Script data
 echo "IPs (fakes): $IPL1, $IPL2, $IPL3"
