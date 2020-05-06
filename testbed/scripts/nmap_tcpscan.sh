@@ -12,6 +12,9 @@ echo "Victim IP 10.10.10.10"
 echo "Host IP 10.10.10.11"
 echo "IDS IP 10.10.10.12"
 
+#VM interface
+interface="eth1"
+
 #Portscan Target IP
 IP="10.10.10.10"
 
@@ -108,8 +111,8 @@ echo "IP falsos - especificos: "
 nmap -D $IPL1,$IPL2,$IPL3 $IP
 nmap -f -D $IPL1,$IPL2,$IPL3 $IP
 echo "IP falsos - IP de origem: "
-nmap -S $IPL1 -e enp0s3 $IP
-nmap -f -S $IPL1 -e enp0s3 $IP
+nmap -S $IPL1 -e $interface $IP
+nmap -f -S $IPL1 -e $interface $IP
 echo "IP Zombie: "
 nmap -sI $IPZ $IP
 nmap -f -sI $IPZ $IP
