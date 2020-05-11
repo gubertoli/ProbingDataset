@@ -8,3 +8,14 @@ This testbed was made and tested on the host configuration
 ## Testbed architecture
 ![Testbed architecture](images/testbed.png)
 
+
+## Available scripts on /scripts folder
+
+All scripts shall be set on the *Vagrantfile*
+
+- *attacker_tcpscan.sh* - Shellscript to perform tcp probing attacks to the target machine
+- *nmap_tcpscan.sh* - Shellscript to perform multiples nmap attacks to the target machine
+- *win10_gateway.ps1* - Powershell script to perform provisioning for Windows 10 box
+
+## Running the testbed
+
