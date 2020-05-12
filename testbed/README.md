@@ -5,6 +5,13 @@ This testbed was made and tested on the host configuration
 - Vagrant 2.2.7
 - Virtualbox 6.1.6
 
+## Using/Reproducing this testbed
+
+$ git clone https://github.com/gubertoli/ProbingDataset.git
+$ cd ProbingDataset
+$ cd testbed
+$ vagrant up
+
 ## Testbed architecture
 ![Testbed architecture](images/testbed.png)
 
