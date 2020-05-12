@@ -7,10 +7,12 @@ This testbed was made and tested on the host configuration
 
 ## Using/Reproducing this testbed
 
+```
 $ git clone https://github.com/gubertoli/ProbingDataset.git
 $ cd ProbingDataset
 $ cd testbed
 $ vagrant up
+```
 
 ## Testbed architecture
 ![Testbed architecture](images/testbed.png)
