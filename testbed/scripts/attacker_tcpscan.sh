@@ -22,11 +22,12 @@ echo "Starting scanning: "
 date
 
 IP="10.10.10.10"	# target IP
-IP_masscan="10.10.10.10/32"	# target IP for masscan
-hping_pckt_count="50"	# required for hping3
+IP_masscan="10.10.10.10/24"	# target IP for masscan
+hping_pckt_count="1000"	# required for hping3
 subnet="10.10.10.0/24"	# for zmap and masscan
 attacker_interface="eth1"
 router1_mac="08:00:27:19:30:05"
+repeat_unicornscan="3" # normally about 300
 
 ###################################
 # nmap
@@ -92,43 +93,43 @@ echo "> unicornscan TCP SYN Scan (src_ip: 172.16.0.11 / dst_ip: ${IP})"
 ip addr del 172.16.0.10/24 dev $attacker_interface
 ip addr add 172.16.0.11/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-unicornscan -Iv -mT $IP
+unicornscan -Iv -mT -R $repeat_unicornscan $IP
 
 echo "> unicornscan TCP Connect Scan (src_ip: 172.16.0.12 / dst_ip: ${IP})"
 ip addr del 172.16.0.11/24 dev $attacker_interface
 ip addr add 172.16.0.12/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-unicornscan -Iv -msf $IP
+unicornscan -Iv -msf -R $repeat_unicornscan $IP
 
 echo "> unicornscan TCP NULL Scan (src_ip: 172.16.0.13 / dst_ip: ${IP})"
 ip addr del 172.16.0.12/24 dev $attacker_interface
 ip addr add 172.16.0.13/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-unicornscan -Iv -mTs $IP
+unicornscan -Iv -mTs -R $repeat_unicornscan $IP
 
 echo "> unicornscan TCP XMAS Scan (src_ip: 172.16.0.14 / dst_ip: ${IP})"
 ip addr del 172.16.0.13/24 dev $attacker_interface
 ip addr add 172.16.0.14/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-unicornscan -Iv -mTsFPU $IP
+unicornscan -Iv -mTsFPU -R $repeat_unicornscan $IP
 
 echo "> unicornscan TCP FULL XMAS Scan (src_ip: 172.16.0.15 / dst_ip: ${IP})"
 ip addr del 172.16.0.14/24 dev $attacker_interface
 ip addr add 172.16.0.15/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-unicornscan -Iv -mTFSRPAU $IP
+unicornscan -Iv -mTFSRPAU -R $repeat_unicornscan $IP
 
 echo "> unicornscan TCP FIN Scan (src_ip: 172.16.0.16 / dst_ip: ${IP})"
 ip addr del 172.16.0.15/24 dev $attacker_interface
 ip addr add 172.16.0.16/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-unicornscan -Iv -mTsF $IP
+unicornscan -Iv -mTsF -R $repeat_unicornscan $IP
 
 echo "> unicornscan TCP ACK Scan (src_ip: 172.16.0.17 / dst_ip: ${IP})"
 ip addr del 172.16.0.16/24 dev $attacker_interface
 ip addr add 172.16.0.17/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-unicornscan -Iv -mTsA $IP
+unicornscan -Iv -mTsA -R $repeat_unicornscan $IP
 
 ###################################
 # hping3
@@ -176,15 +177,17 @@ hping3 $IP -c $hping_pckt_count -V -p ++1 -A
 # -n number of hosts
 ###################################
 echo "> zmap TCP SYN scan to network (src_ip: 172.16.0.23): ${subnet} "
-echo ">> zmap FTP port 21"
+echo ">> zmap port /0"
 ip addr del 172.16.0.22/24 dev $attacker_interface
 ip addr add 172.16.0.23/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-zmap -B 1M -p 21 -n 256 $subnet -i $attacker_interface --gateway-mac=$router1_mac
+zmap -B 1M -p 0 -n 256 --probes=250 $subnet -i $attacker_interface --gateway-mac=$router1_mac
 echo ">> zmap SSH port 22"
-zmap -B 1M -p 22 -n 256 $subnet -i $attacker_interface --gateway-mac=$router1_mac
+zmap -B 1M -p 22 -n 256 --probes=250 $subnet -i $attacker_interface --gateway-mac=$router1_mac
 echo ">> zmap HTTP port 80"
-zmap -B 1M -p 80 -n 256 $subnet -i $attacker_interface --gateway-mac=$router1_mac
+zmap -B 1M -p 80 -n 256 --probes=250 $subnet -i $attacker_interface --gateway-mac=$router1_mac
+echo ">> zmap HTTPS port 443"
+zmap -B 1M -p 443 -n 256 --probes=250 $subnet -i $attacker_interface --gateway-mac=$router1_mac
 
 
 ###################################
@@ -196,7 +199,7 @@ echo "> masscan scan to network (src_ip: 172.16.0.24): ${subnet}"
 ip addr del 172.16.0.23/24 dev $attacker_interface
 ip addr add 172.16.0.24/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-masscan -p0-100 $IP_masscan -e $attacker_interface --router-ip 172.16.0.254 # required to set interface and router ip to work in VM environment
+masscan -p0-1000 $IP_masscan -e $attacker_interface --router-ip 172.16.0.254 # required to set interface and router ip to work in VM environment
 
 echo "> Finishing scan and returning to original interface IP"
 ip addr del 172.16.0.24/24 dev $attacker_interface
