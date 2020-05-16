@@ -20,7 +20,7 @@ $ vagrant up
 
 ## Available scripts on /scripts folder
 
-The scripts on these folder are for VM provisioning. All scripts shall be set on the *Vagrantfile*
+The scripts on this folder are for VM provisioning. All scripts shall be set on the *Vagrantfile*
 
 - *attacker_tcpscan.sh* - Shellscript to perform tcp probing attacks to the target machine
 - *nmap_tcpscan.sh* - Shellscript to perform multiples nmap attacks to the target machine
