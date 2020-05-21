@@ -199,7 +199,7 @@ echo "> masscan scan to network (src_ip: 172.16.0.24): ${subnet}"
 ip addr del 172.16.0.23/24 dev $attacker_interface
 ip addr add 172.16.0.24/24 dev $attacker_interface
 ip route add 10.10.10.0/24 via 172.16.0.254
-masscan -p0-1000 $IP_masscan -e $attacker_interface --router-ip 172.16.0.254 # required to set interface and router ip to work in VM environment
+masscan -p0-500 $IP_masscan -e $attacker_interface --router-ip 172.16.0.254 # required to set interface and router ip to work in VM environment
 
 echo "> Finishing scan and returning to original interface IP"
 ip addr del 172.16.0.24/24 dev $attacker_interface

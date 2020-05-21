@@ -2,7 +2,7 @@ import pyshark
 import pandas as pd
 
 
-df = pd.DataFrame(pd.np.empty((0, 36)))     # 36 empty columns
+df = pd.DataFrame(pd.np.empty((0, 43)))     # 43 empty columns
 
 def retrieve_attributes(packet):
 	pkt_to_list = []
@@ -10,6 +10,13 @@ def retrieve_attributes(packet):
     # List of the attributes to be retrieved from each packet (wireshark.org/docs/dfref/)
     
 	attributes = [
+	["frame_info", "encap_type"],    #
+	["frame_info", "time"],          #
+	["frame_info", "time_epoch"],    #
+	["frame_info", "number"],        # 
+	["frame_info", "len"],           # 
+	["frame_info", "cap_len"],       # 
+        ["eth", "type"],            # Ethernet Type
         ["ip", "version"],          # Internet Protocol (IP) Version
 	["ip", "hdr_len"],          # IP header length (IHL)
 	["ip", "tos"],		    # IP Type of Service (TOS)
