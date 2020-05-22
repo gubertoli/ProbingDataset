@@ -7,7 +7,7 @@ In this project the challenge is to manage MAWILab dataset (~10Gb) in a regular 
 
 1. Get the MAWILab dataset to generate "normal" traffic (pcap and csv rules)
 
-Currently this repo is based on (MAWILab Source)[http://www.fukuda-lab.org/mawilab/v1.1/2019/11/21/20191121.html]:
+Currently this repo is based on [MAWILab Source](http://www.fukuda-lab.org/mawilab/v1.1/2019/11/21/20191121.html)
 - 201911211400.pcap.gz (compressed ~3Gb / uncompressed ~10Gb)
 - 20191121\_anomalous\_suspicious.csv
 
@@ -18,8 +18,8 @@ Currently this repo is based on (MAWILab Source)[http://www.fukuda-lab.org/mawil
 > It will output the splitted files as output\_#\_input\_file.pcap
 
 ```
-$ ./1\_split\_pcap.sh input\_file.pcap number\_of\_packets_per_file
-$ ./1\_split\_pcap.sh 201911211400.pcap 1000000  # resulting in 134 files of 93 Mb each
+$ ./1_split_pcap.sh input_file.pcap number_of_packets_per_file
+$ ./1_split_pcap.sh 201911211400.pcap 1000000  # resulting in 134 files of 93 Mb each
 ```
 4. Run 2\_filter\_pcap.sh to filter out anomalous and suspicious packets
 > It will output the filtered files as output\_*filtered.pcap (in our case, in average, ~45Mb each)
