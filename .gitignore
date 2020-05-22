@@ -102,3 +102,12 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+.gz
+testbed/*.pcap
+testbed/*.part
+testbed/*.gz
+mawilab/*.gz
+mawilab/*.part
+mawilab/*.pcap
+#old/

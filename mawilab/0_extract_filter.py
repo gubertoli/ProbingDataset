@@ -20,7 +20,7 @@ import re
 """
 
 def main():
-    path = "mawilab/sample.csv"
+    path = "20191121_anomalous_suspicious.csv"
     df = pd.read_csv(path)
 
     anomalous = df.loc[(df[' nbDetectors'] == "anomalous") | (df[' nbDetectors'] == "suspicious")]
