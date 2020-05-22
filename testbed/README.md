@@ -25,6 +25,3 @@ The scripts on this folder are for VM provisioning. All scripts shall be set on 
 - *attacker_tcpscan.sh* - Shellscript to perform tcp probing attacks to the target machine
 - *nmap_tcpscan.sh* - Shellscript to perform multiples nmap attacks to the target machine
 - *win10_gateway.ps1* - Powershell script to perform provisioning for Windows 10 box
-
-## Running the testbed
-
