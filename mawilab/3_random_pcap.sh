@@ -4,7 +4,7 @@
 # Usage: 
 #		./randomPcap.sh
 #		It will select random $smaller_number packets on output_*filtered.pcap file and save
-#		on output*small.pcap file (after filterPcap.sh)
+#		on output*small.pcap file (after 2_filter_pcap.sh)
 #
 # Reference: 
 #		https://stackoverflow.com/questions/47067272/how-to-get-random-packets-from-a-pcap-file
@@ -24,7 +24,12 @@ for i in output_*filtered.pcap; do
 	    # Selects numbers $j to $endrange from the generated random numbers:
 	    echo "$j - $endrange"
 	    pkt_numbers=$(echo $selected_pkt_numbers | awk -v start="$j" -v end="$endrange" '{ out=""; for (i=start+1; i<=end; i++) out=out" "$i; print out}')
-    	editcap -r ${i%.*}.pcap ${i%.*}small-$j.pcap $pkt_numbers
+    	    editcap -r ${i%.*}.pcap ${i%.*}small-$j.pcap $pkt_numbers # generate pcap with sample
 	done
-	mergecap -w ${i%.*}small.pcap `ls $2-*.pcap`
+
+	mergecap -w ${i%.*}small.pcap `ls *filteredsmall-*.pcap` # merge samples in single small
+	rm *filteredsmall-*.pcap # remove all filteredsmall after merge
 done
+
+mergecap -w ./data/normal.pcap `ls *small.pcap`
+rm *small.pcap # remove all small after normal merge

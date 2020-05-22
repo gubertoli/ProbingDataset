@@ -56,10 +56,12 @@ def main():
     filter_rule = filter_rule[:len(filter_rule)-4] + ")"
 
 
-    print(filter_rule)
-    print(df.columns)
-    print(anomalous.head())
-    print(anomalous.tail())
+    with open("filter_rule.txt", "w") as rule:
+        rule.write(filter_rule)
+    
+    # print(df.columns)
+    # print(anomalous.head())
+    # print(anomalous.tail())
 
 
 if __name__ == "__main__":
