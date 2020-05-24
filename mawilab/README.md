@@ -25,8 +25,8 @@ $ ./1_split_pcap.sh 201911211400.pcap 1000000  # resulting in 134 files of 93 Mb
 > It will output the filtered files as output\_*filtered.pcap (in our case, in average, ~45Mb each)
 
 5. Run 3\_random\_pcap.sh to extract random packets from filtered PCAP files
-> It will select random $smaller\_number packets on output\_*filtered.pcap file and save as output*filteredsmall-*.pcap file (if required edit 3\_random\_pcap.sh to set it according your needs)
+> It will sample random $smaller\_number packets from output\_*filtered.pcap file and save as ./data/normal.pcap file (if required edit 3\_random\_pcap.sh to set it according your needs)
 
-6. Finally, run 4\_generate\_normal\_dataset.py to generate the "normal" traffic dataset. These random packets will compose the IDS dataset as the "normal" traffic, to be saved as ./data/normal\_dataset.csv
+6. Finally, run 4\_generate\_normal\_dataset.py to generate the "normal" traffic dataset based on ethernet, ip and tcp headers. These random packets will compose the IDS dataset as the "normal" traffic, to be saved as ./data/normal\_dataset.csv
 
 
