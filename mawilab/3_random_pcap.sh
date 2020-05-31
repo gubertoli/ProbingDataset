@@ -31,5 +31,5 @@ for i in output_*filtered.pcap; do
 	rm *filteredsmall-*.pcap # remove all filteredsmall after merge
 done
 
-mergecap -w ./data/normal.pcap `ls *small.pcap`
+mergecap -w data/normal.pcap `ls *small.pcap`
 rm *small.pcap # remove all small after normal merge

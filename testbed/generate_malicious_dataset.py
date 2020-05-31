@@ -2,7 +2,7 @@ import pyshark
 import pandas as pd
 
 
-df = pd.DataFrame(pd.np.empty((0, 43)))     # 43 empty columns
+df = pd.DataFrame(pd.np.empty((0, 41)))     # 41 empty columns
 
 def retrieve_attributes(packet):
 	pkt_to_list = []
@@ -40,8 +40,6 @@ def retrieve_attributes(packet):
         ["tcp", "ack"],             # Acknowledgment number
 	["tcp", "len"],             # TCP segment length
         ["tcp", "hdr_len"],         # Header length
-        ["tcp", "srcport"],         # Source port
-        ["tcp", "dstport"],         # Destination port
         ["tcp", "flags"],           # Flags
         ["tcp", "flags.fin"],           # FIN flag
         ["tcp", "flags.syn"],           # SYN flag
