@@ -112,3 +112,4 @@ mawilab/*.part
 mawilab/*.pcap
 mawilab/data/*.pcap
 #old/
+*.h
