@@ -21,6 +21,3 @@ ip,label
 172.16.0.22,hping_tcp_ack
 172.16.0.23,zmap_tcp_syn
 172.16.0.24,masscan_tcp_syn
-172.16.0.101,nmap_vvv
-172.16.0.103,nmap_fast
-172.16.0.107,nmap_top10
