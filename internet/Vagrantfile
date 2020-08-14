@@ -1,0 +1,40 @@
+# _*_ mode: ruby _*_
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # a zombie machine (for idle scan)
+  config.vm.define "zombie" do |zombie|
+    zombie.vm.box = "ubuntu/xenial64"
+    zombie.vm.hostname = "zombie"
+    zombie.vm.synced_folder ".", "/vagrant", disabled: true
+    zombie.vm.network "private_network", ip: "172.16.0.201/24", virtualbox__intnet: "external", nic_type: "virtio"
+    zombie.vm.provision "shell", run: "always", inline: "ip route del default"
+    zombie.vm.provision "shell", run: "always", inline: "ip route add default via 172.16.0.254"
+    
+    zombie.vm.provider "virtualbox" do |vb|
+      vb.name = "zombie"
+      vb.gui = false
+      vb.memory = "512"
+    end
+  end
+
+  # the attacker machine
+  config.vm.define "attacker" do |attacker|
+    attacker.vm.box = "kalilinux/rolling" 
+    attacker.vm.hostname = "attacker" 
+    attacker.vm.synced_folder ".", "/vagrant", disabled: true
+    attacker.vm.network "private_network", ip: "172.16.0.2/24", virtualbox__intnet: "external"
+    
+    attacker.vm.provision "shell", run: "always", inline: "ip route add 10.10.10.0/24 via 172.16.0.254"
+    attacker.vm.provision "shell", run: "always", path: "scripts/tcpscan.sh"
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.name = "attacker" 
+      vb.memory = "1024"
+    end
+  end
+
+
+end
