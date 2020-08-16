@@ -3,35 +3,39 @@
 
 Vagrant.configure("2") do |config|
 
-  # a zombie machine (for idle scan)
-  config.vm.define "zombie" do |zombie|
-    zombie.vm.box = "ubuntu/xenial64"
-    zombie.vm.hostname = "zombie"
-    zombie.vm.synced_folder ".", "/vagrant", disabled: true
-    zombie.vm.network "private_network", ip: "172.16.0.201/24", virtualbox__intnet: "external", nic_type: "virtio"
-    zombie.vm.provision "shell", run: "always", inline: "ip route del default"
-    zombie.vm.provision "shell", run: "always", inline: "ip route add default via 172.16.0.254"
-    
-    zombie.vm.provider "virtualbox" do |vb|
-      vb.name = "zombie"
-      vb.gui = false
-      vb.memory = "512"
-    end
-  end
+  #config.vm.define "router"  do |router|
+  #  router.vm.box = "debian/jessie64"
+  #  router.vm.hostname = "router" 
+  #  router.vm.synced_folder ".", "/vagrant", disabled: true
+  #  #router.vm.network "private_network", ip: "10.20.10.253/24", virtualbox__intnet: "routers", nic_type: "virtio"
+  #  router.vm.network "private_network", ip: "172.16.0.254/24", virtualbox__intnet: "external", nic_type: "virtio"
+
+  #  #router.vm.provision "shell", run: "always", inline: "ip route add 10.10.10.0/24 via 10.20.10.254"
+  #  router.vm.provision "shell", inline: "sysctl -w net.ipv4.ip_forward=1"
+  #  router.vm.provision "shell", inline: "echo [Router] Configuration done!"
+
+  #  router.vm.provider "virtualbox" do |vb|
+  #    vb.name = "router"
+  #    vb.gui = false
+  #    vb.memory = "512"
+  #  end
+  #end
 
   # the attacker machine
-  config.vm.define "attacker" do |attacker|
-    attacker.vm.box = "kalilinux/rolling" 
-    attacker.vm.hostname = "attacker" 
-    attacker.vm.synced_folder ".", "/vagrant", disabled: true
-    attacker.vm.network "private_network", ip: "172.16.0.2/24", virtualbox__intnet: "external"
+  config.vm.define "kali" do |kali|
+    kali.vm.box = "kalilinux/rolling" 
+    kali.vm.hostname = "kali" 
+    kali.vm.synced_folder ".", "/vagrant", disabled: true
+    #kali.vm.network "private_network", ip: "172.16.0.2/24", virtualbox__intnet: "external"
     
-    attacker.vm.provision "shell", run: "always", inline: "ip route add 10.10.10.0/24 via 172.16.0.254"
-    attacker.vm.provision "shell", run: "always", path: "scripts/tcpscan.sh"
+    #kali.vm.provision "shell", run: "always", inline: "sudo ip route del default"
+    #kali.vm.provision "shell", run: "always", inline: "sudo ip route add default via 172.16.0.254"
+    #kali.vm.provision "shell", run: "always", inline: "ip route add 10.10.10.0/24 via 172.16.0.254"
+    kali.vm.provision "shell", run: "always", path: "scripts/tcpscan.sh"
 
     config.vm.provider "virtualbox" do |vb|
       vb.gui = false
-      vb.name = "attacker" 
+      vb.name = "kali" 
       vb.memory = "1024"
     end
   end
