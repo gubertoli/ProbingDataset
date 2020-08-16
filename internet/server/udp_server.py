@@ -21,7 +21,7 @@ while True:
     # -nn   | not resolve hostnames or ports
     # -w    | write to file
 
-    p = subprocess.Popen(['sudo', 'tcpdump', '-i', 'wlp6s0', 'tcp', '-s0', '-nn',
+    p = subprocess.Popen(['sudo', 'tcpdump', '-i', 'eth0', 'tcp', '-s0', '-nn',
                           '-w', filename], stdout=subprocess.PIPE)
 
     while stop != "STOP":
