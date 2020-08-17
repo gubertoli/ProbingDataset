@@ -171,7 +171,7 @@ for IP in ${IPS}; do
 	sleep 5
 	echo "> hping3 TCP SYN Scan (dst_ip: ${IP})"
 
-	hping3 ${IP} -c $hping_pckt_count -V -p ++1 -S
+	hping3 ${IP} --fast -c $hping_pckt_count -V -p ++1 -S
 	echo -n "STOP" >/dev/udp/${IP}/12000
 	sleep 5
 
@@ -179,7 +179,7 @@ for IP in ${IPS}; do
 	sleep 5
 	echo "> hping3 TCP NULL Scan (dst_ip: ${IP})"
 
-	hping3 ${IP} -c $hping_pckt_count -V -p ++1 -Y
+	hping3 ${IP} --fast -c $hping_pckt_count -V -p ++1 -Y
 	echo -n "STOP" >/dev/udp/${IP}/12000
 	sleep 5
 
@@ -187,7 +187,7 @@ for IP in ${IPS}; do
 	sleep 5
 	echo "> hping3 TCP XMAS Scan (dst_ip: ${IP})"
 
-	hping3 ${IP} -c $hping_pckt_count -V -p ++1 -UPF
+	hping3 ${IP} --fast -c $hping_pckt_count -V -p ++1 -UPF
 	echo -n "STOP" >/dev/udp/${IP}/12000
 	sleep 5
 
@@ -195,7 +195,7 @@ for IP in ${IPS}; do
 	sleep 5
 	echo "> hping3 TCP FIN Scan (dst_ip: ${IP})"
 
-	hping3 ${IP} -c $hping_pckt_count -V -p ++1 -F
+	hping3 ${IP} --fast -c $hping_pckt_count -V -p ++1 -F
 	echo -n "STOP" >/dev/udp/${IP}/12000
 	sleep 5
 
@@ -203,7 +203,7 @@ for IP in ${IPS}; do
 	sleep 5
 	echo "> hping3 TCP ACK Scan (dst_ip: ${IP})"
 
-	hping3 ${IP} -c $hping_pckt_count -V -p ++1 -A
+	hping3 ${IP} --fast -c $hping_pckt_count -V -p ++1 -A
 	echo -n "STOP" >/dev/udp/${IP}/12000
 	sleep 5
 
