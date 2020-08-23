@@ -9,7 +9,7 @@ print (">> Server running...")
 
 while True:
     message, client_address = server_socket.recvfrom(2048)
-    print(">> Received message from: ", client_address)
+    print(">> Received message from: ", client_address[0])
 
     stop = ""
     filename = message.decode('utf-8')[:2]+'.pcap'  # message parsing
@@ -21,7 +21,7 @@ while True:
     # -nn   | not resolve hostnames or ports
     # -w    | write to file
 
-    p = subprocess.Popen(['sudo', 'tcpdump', '-i', 'eth0', 'tcp', '-s0', '-nn',
+    p = subprocess.Popen(['sudo', 'tcpdump', '-i', 'eth0', 'tcp', 'src', str(client_address[0]), '-s0', '-nn',
                           '-w', filename], stdout=subprocess.PIPE)
 
     while stop != "STOP":
