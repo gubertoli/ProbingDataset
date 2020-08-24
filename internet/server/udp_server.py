@@ -1,5 +1,6 @@
 from socket import *
 import subprocess
+import os
 
 server_port = 12000
 server_socket = socket(AF_INET, SOCK_DGRAM)
@@ -28,4 +29,8 @@ while True:
         msg, client_addr = server_socket.recvfrom(2048)
         stop = msg.decode('utf-8')
 
-    p.terminate()
+    #p.terminate()
+    cmd = "sudo kill " + str(p.pid)
+    os.system(cmd)
+
+
