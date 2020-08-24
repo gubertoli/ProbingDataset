@@ -29,8 +29,9 @@ while True:
         msg, client_addr = server_socket.recvfrom(2048)
         stop = msg.decode('utf-8')
 
+    p.kill()
     #p.terminate()
-    cmd = "sudo kill " + str(p.pid)
-    os.system(cmd)
+    #cmd = "sudo kill " + str(p.pid)
+    #os.system(cmd)
 
 
