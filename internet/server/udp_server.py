@@ -22,16 +22,17 @@ while True:
     # -nn   | not resolve hostnames or ports
     # -w    | write to file
 
-    p = subprocess.Popen(['sudo', 'tcpdump', '-i', 'eth0', 'tcp', 'and', 'src', str(client_address[0]), '-s0', '-nn',
+    p = subprocess.Popen(['tcpdump', '-i', 'enp9s0', 'tcp', 'and', 'src', str(client_address[0]), '-s0', '-nn',
                           '-w', filename], stdout=subprocess.PIPE)
 
     while stop != "STOP":
         msg, client_addr = server_socket.recvfrom(2048)
         stop = msg.decode('utf-8')
 
-    p.kill()
-    #p.terminate()
-    #cmd = "sudo kill " + str(p.pid)
-    #os.system(cmd)
-
+    #p.kill()
+    try:
+        print(">> Stopped PID:", str(p.pid))
+        p.terminate()
+    except:
+        print(">> Error to terminate process")
 
