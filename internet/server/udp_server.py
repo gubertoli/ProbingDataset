@@ -22,7 +22,7 @@ while True:
     # -nn   | not resolve hostnames or ports
     # -w    | write to file
 
-    p = subprocess.Popen(['tcpdump', '-i', 'enp9s0', 'tcp', 'and', 'src', str(client_address[0]), '-s0', '-nn',
+    p = subprocess.Popen(['tcpdump', '-i', 'eth0', 'tcp', 'and', 'src', str(client_address[0]), '-s0', '-nn',
                           '-w', filename], stdout=subprocess.PIPE)
 
     while stop != "STOP":
