@@ -12,6 +12,7 @@ A cloud infrastructure must be set to reproduce this configuration.
 $ git clone https://github.com/gubertoli/ProbingDataset.git
 $ cd ProbingDataset
 $ cd internet
+$ sudo apt-get install vagrant virtualbox
 $ vagrant up
 ```
 
