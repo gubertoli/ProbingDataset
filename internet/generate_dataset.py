@@ -2,6 +2,7 @@ import pyshark
 import pandas as pd
 import os
 import numpy as np
+import re
 
 def create_dataframe():
     	# List of the attributes to be retrieved from each packet (wireshark.org/docs/dfref/)
@@ -131,29 +132,33 @@ def retrieve_attributes(packet):
 
 def main():
 	i = 1
+	regex = r"\/(\d{2})(_\d+)?.pcap"
+
 	create_dataframe()
 	for root, dirs, files in os.walk("."):
 		for file in files:
 			if file.endswith(".pcap"):
 				pcap_file = os.path.join(root, file)
 				global file_num
-				file_num = pcap_file[-7:-5]
-				print(pcap_file, file_num, i)
+				file_num = re.search(regex, pcap_file).group(1)
+				print(pcap_file, file_num)
 				cap = pyshark.FileCapture(pcap_file, display_filter="tcp")	# filtering out just tcp packets
-				cap.apply_on_packets(retrieve_attributes)
+				try:				
+					cap.apply_on_packets(retrieve_attributes)
 
-				global df
-				if i==1:
-					df.to_csv('malicious_dataset.csv', index=None, header=True)
-					i+=1
-				else:
-					df.to_csv('malicious_dataset.csv', mode='a', index=None, header=False)
-					i+=1
-				
-				# clear dataframe
-				df = df.iloc[0:0]
+					global df
+					if i==1:
+						df.to_csv('malicious_dataset.csv', index=None, header=True)
+						i+=1
+					else:
+						df.to_csv('malicious_dataset.csv', mode='a', index=None, header=False)
+						i+=1
+					# clear dataframe
+					df = df.iloc[0:0]
 
-				cap.close()
+					cap.close()
+				except:
+					print("> pcap with issue:", pcap_file)
 
 if __name__ == "__main__":
 	main()

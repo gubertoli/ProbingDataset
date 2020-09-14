@@ -115,3 +115,5 @@ mawilab/data/*.pcap
 *.h
 .vagrant
 internet/pcap/*
+internet/pcap
+
