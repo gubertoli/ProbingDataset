@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+        kali:
+                build:
+                        context: .
+                        dockerfile: Dockerfile
+                container_name: kali
+                stdin_open: true
+                tty: true

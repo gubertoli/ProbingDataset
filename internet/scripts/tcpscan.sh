@@ -2,27 +2,17 @@
 
 # The comments below try to explain the details of this script
 #
-# [!] Vagrant provisioning with shell script is by default executed with privileged rights (root)
-#
 # [!] zmap requires to each destination port be defined by one command-line
 #
-# [!] To support dataset labeling, each attack will have specific source IP (applicable to attacker box)
-#
-#                     $ sudo ip addr del 172.16.0.2/24 dev eth1
-#                     $ sudo ip addr add 172.16.0.3/24 dev eth1
 #
 
-# Remember to disable host machine firewall (in Ubuntu 'ufw disable')
-# Current kalilinux/rolling version 2020.1.2 do not have zmap and unicornscan as baseline, so it is required to install
-apt-get update
-apt-get install zmap unicornscan -y
 
 echo "Starting scanning: "
 date
 
-IPS='34.215.235.204 18.181.211.222 3.250.112.204 54.206.154.130'	# target IPs
-hping_pckt_count="1000"	# required for hping3
+target="targets" # file with targets IP
 
+hping_pckt_count="1000"	# required for hping3
 attacker_interface="eth1"
 router1_mac="08:00:27:19:30:05"
 repeat_unicornscan="3" # normally about 300
@@ -34,11 +24,13 @@ repeat_unicornscan="3" # normally about 300
 # -n (no DNS resolution)
 # -f (fragmentation)
 ###################################
-for IP in ${IPS}; do
+while IFS= read -r IP
+do
 
 	subnet="${IP}/32"	# for zmap and masscan
 	IP_masscan="${IP}/32"	# target IP for masscan
 
+	echo "$IP"
 	echo -n "01" >/dev/udp/${IP}/12000	
 	sleep 5
 	echo "> nmap TCP SYN Scan (dst_ip: ${IP})"
@@ -244,7 +236,7 @@ for IP in ${IPS}; do
 	masscan -p0-500 $IP_masscan #-e $attacker_interface --router-ip 172.16.0.254 # required to set interface and router ip to work in VM environment
 	echo -n "STOP" >/dev/udp/${IP}/12000
 	sleep 5
-done
+done < "$target"
 	
 echo "> Finishing scan"
 
