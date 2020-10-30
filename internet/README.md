@@ -1,12 +1,11 @@
-# Testbed for malicious packets generation
+# Testbed for malicious packets generation on Internet
 
 This testbed was made and tested on the host configuration
 - Ubuntu Linux 18.04.4 LTS
-- Vagrant 2.2.7
-- Virtualbox 6.1.6
+- Docker 19.03.6
 
 ## Using/Reproducing this testbed
-A cloud infrastructure must be set to reproduce this configuration.
+A cloud infrastructure must be set to reproduce this configuration (TBD).
 
 ```
 $ git clone https://github.com/gubertoli/ProbingDataset.git
@@ -22,8 +21,6 @@ $ vagrant up
 
 ## Available scripts on /scripts folder
 
-The scripts on this folder are for VM provisioning. All scripts shall be set on the *Vagrantfile*
-
-- *attacker_tcpscan.sh* - Shellscript to perform tcp probing attacks to the target machine
-- *nmap_tcpscan.sh* - Shellscript to perform multiples nmap attacks to the target machine
+- *tcpscan.sh* - Shell script to perform tcp probing attacks to the target machines with ```nmap```, ```zmap```, ```masscan```, ```hping3```, and ```unicornscan```
+- *targets* - list of target IPs (one per line)
 
