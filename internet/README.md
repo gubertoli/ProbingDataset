@@ -24,3 +24,7 @@ $ vagrant up
 - *tcpscan.sh* - Shell script to perform tcp probing attacks to the target machines with ```nmap```, ```zmap```, ```masscan```, ```hping3```, and ```unicornscan```
 - *targets* - list of target IPs (one per line)
 
+## /server folder
+This folder contain all the required information and scripts to configure the cloud infrastructure (each "honeypot"). Currently it create a UDP service to allow remote start/stop of [tcpdump](https://www.tcpdump.org). 
+This approach is used to support automatic labeling of generated pcap files (a single file for each attack).
+
