@@ -5,21 +5,28 @@ This testbed was made and tested on the host configuration
 - Docker 19.03.6
 
 ## Using/Reproducing this testbed
-A cloud infrastructure must be set to reproduce this configuration (TBD).
+A cloud infrastructure with targets must be set to reproduce this
 
+To operate using a Virtual Machine
 ```
 $ git clone https://github.com/gubertoli/ProbingDataset.git
 $ cd ProbingDataset
 $ cd internet
 $ sudo apt-get install vagrant virtualbox
+$ cd attacker_vm
 $ vagrant up
+```
+
+To operate using Docker
+```
+$ cd attacker_container
 ```
 
 ## Testbed architecture
 
 
 
-## Available scripts on /scripts folder
+## Available scripts on /targets folder
 
 - *tcpscan.sh* - Shell script to perform tcp probing attacks to the target machines with ```nmap```, ```zmap```, ```masscan```, ```hping3```, and ```unicornscan```
 - *targets* - list of target IPs (one per line)
