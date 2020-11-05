@@ -40,9 +40,6 @@ def main():
             pcap_url = pcap[0].attrs["href"]
             label_url = day_url + "_anomalous_suspicious.csv"
             info_url = info[0].attrs["href"]
-            #print(pcap_url)
-            #print(label_url)
-            #print(info_url)
         except:
             print("BS Error!")
             continue
@@ -51,8 +48,11 @@ def main():
         download_pcap(pcap_url)
 
 
-#cap = pyshark.FileCapture(pcap_file, display_filter="tcp")
-#cap.close()
+# Return the number of packets
+# capinfos -Mc 201906021400.pcap.gz | grep "Number" | tr -d " " | cut -d ":" -f 2
+
+# Return the number of filtered packets 
+# tshark -r 201906021400.pcap.gz -Y "`cat filter_rule.txt`" | wc -l
 
 def download_pcap(url):
     local_filename = url.split('/')[-1]
@@ -61,7 +61,7 @@ def download_pcap(url):
         r.raise_for_status()
         with open(local_filename, 'wb') as f:
             for chunk in r.iter_content(chunk_size=8192):
-                # If you have chunk emcpded response uncomment if
+                # If you have chunk encoded response uncomment if
                 # and set chunk_size=None
                 #if chunk:
                 f.write(chunk)

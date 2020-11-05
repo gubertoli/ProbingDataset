@@ -3,9 +3,7 @@ import re
 
 """
 
-    This script allows the extraction or removal of anomalous/suspicious packets from a MAWILab dataset
-    MAWILab is being used on this project as "background" traffic
-    It uses as input the csv file provided by MAWILab
+    This script allows the extraction of anomalous/suspicious packets from a MAWILab dataset
 
     Example:
         Traffic Trace: 2019/11/21
@@ -20,7 +18,7 @@ import re
 """
 
 def main():
-    path = "20191121_anomalous_suspicious.csv"
+    path = "20190602_anomalous_suspicious.csv"
     df = pd.read_csv(path)
 
     anomalous = df.loc[(df[' nbDetectors'] == "anomalous") | (df[' nbDetectors'] == "suspicious")]
@@ -31,7 +29,8 @@ def main():
     # ip.dst
     # tcp.dstport
 
-    filter_rule = "not ("
+    #filter_rule = "not (" # this line keep just the legitim traffic
+    filter_rule = "(" # this line keep just malicious/anomolous traffic
     for index, row in anomalous.iterrows():
         srcIP = row[' srcIP']
         srcPort = row[' srcPort']

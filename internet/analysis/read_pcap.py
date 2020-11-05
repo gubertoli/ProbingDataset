@@ -1,5 +1,5 @@
 import pyshark
-pcap_file = "201906021400.pcap.gz"
+pcap_file = "output_00131_20191121021442filtered.pcap"
 cap = pyshark.FileCapture(pcap_file, display_filter="tcp")
 print(cap)
 print("-----------")
