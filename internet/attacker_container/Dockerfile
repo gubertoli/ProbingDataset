@@ -7,8 +7,7 @@ RUN apt-get -y update && apt-get -y dist-upgrade && apt-get -y autoremove && apt
 RUN apt-get -y install zmap masscan hping3 nmap unicornscan
 
 COPY ../scripts/ /root
-
-# applicable to container run
-CMD ["/bin/bash"]
+RUN chmod +x /root/tcpscan.sh
+RUN ./root/tcpscan.sh
 
 
