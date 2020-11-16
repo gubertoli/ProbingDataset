@@ -8,6 +8,6 @@ RUN apt-get -y install zmap masscan hping3 nmap unicornscan
 
 COPY /scripts/ /root
 RUN chmod +x /root/tcpscan.sh
-RUN ./root/tcpscan.sh
+RUN /root/tcpscan.sh
 
 
