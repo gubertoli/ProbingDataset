@@ -103,7 +103,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-.gz
+*.gz
 testbed/*.pcap
 testbed/*.part
 testbed/*.gz
