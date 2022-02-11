@@ -1,4 +1,6 @@
 # Probing Dataset
+**[UPDATE] For a more detailed approach, take a look in a proposed framework for end-to-end Network Intrusion Detection Systems** *(dataset generation, ML model, performance evaluation and deployment)* **take a look on the [AB-TRAP framework repository](https://github.com/c2dc/AB-TRAP)!**
+
 This repository is composed by a Dataset of Probing Attacks (Port Scan) performed with nmap, unicornscan, hping3, zmap and masscan.
 
 It also presents a way to extract background traffic to be used as "normal" traffic to support Machine Learning algorithms development in IDS research. In this project the current source are the MAWILab datasets.
